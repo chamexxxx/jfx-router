@@ -17,28 +17,6 @@ public class Router {
     private static Consumer<Scene> initialSceneCallback;
     private final static HashMap<String, Route> routes = new HashMap<>();
 
-    public static class StageOptions {
-        private final double width;
-        private final double height;
-        private final boolean maximized;
-
-        public StageOptions(double width, double height, boolean maximized) {
-            this.width = width;
-            this.height = height;
-            this.maximized = maximized;
-        }
-    }
-
-    private static class Route {
-        public final String resourceName;
-        public final StageOptions stageOptions;
-
-        public Route(String resourceName, StageOptions stageOptions) {
-            this.resourceName = resourceName;
-            this.stageOptions = stageOptions;
-        }
-    }
-
     public static void setInitialSceneConfigurator(Consumer<Scene> initialSceneCallback) {
         Router.initialSceneCallback = initialSceneCallback;
     }
@@ -75,13 +53,13 @@ public class Router {
             }
 
             if (route.stageOptions != null) {
-                stage.setWidth(route.stageOptions.width);
-                stage.setHeight(route.stageOptions.width);
-                stage.setMaximized(route.stageOptions.maximized);
+                stage.setWidth(route.stageOptions.getWidth());
+                stage.setHeight(route.stageOptions.getHeight());
+                stage.setMaximized(route.stageOptions.isMaximized());
             } else {
-                stage.setWidth(defaultStageOptions.width);
-                stage.setHeight(defaultStageOptions.height);
-                stage.setMaximized(defaultStageOptions.maximized);
+                stage.setWidth(defaultStageOptions.getWidth());
+                stage.setHeight(defaultStageOptions.getHeight());
+                stage.setMaximized(defaultStageOptions.isMaximized());
             }
         } catch (IOException e) {
             e.printStackTrace();
