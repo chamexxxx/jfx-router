@@ -1,11 +1,13 @@
 package com.chamexxxx;
 
+import java.net.URL;
+
 public class Route {
-    public final String resourceName;
+    public final URL resourcePath;
     public final StageOptions stageOptions;
 
-    public Route(String resourceName, StageOptions stageOptions) {
-        this.resourceName = resourceName;
+    public Route(URL resourcePath, StageOptions stageOptions) {
+        this.resourcePath = resourcePath;
         this.stageOptions = stageOptions;
     }
 }

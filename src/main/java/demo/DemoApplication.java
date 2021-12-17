@@ -9,14 +9,14 @@ public class DemoApplication extends Application {
     public void start(Stage primaryStage) {
         configureStage(primaryStage);
 
-        Router.bind(this, primaryStage);
+        Router.bind(primaryStage);
 
         Router.setInitialSceneConfigurator(scene -> {
             scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
         });
 
-        Router.addScene("home", "home-view.fxml");
-        Router.addScene("login", "login-view.fxml");
+        Router.addScene("home", getClass().getResource("home-view.fxml"));
+        Router.addScene("login", getClass().getResource("login-view.fxml"));
 
         Router.switchScene("login");
 
