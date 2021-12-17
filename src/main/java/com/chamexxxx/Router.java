@@ -17,14 +17,14 @@ public class Router {
     private static Consumer<Scene> initialSceneCallback;
     private final static HashMap<String, Route> routes = new HashMap<>();
 
-    public static void setInitialSceneConfigurator(Consumer<Scene> initialSceneCallback) {
-        Router.initialSceneCallback = initialSceneCallback;
-    }
-
     public static void bind(Object ref, Stage primaryStage) {
         Router.stage = primaryStage;
         Router.defaultStageOptions = new StageOptions(stage.getWidth(), stage.getHeight(), stage.isMaximized());
         Router.ref = ref;
+    }
+
+    public static void setInitialSceneConfigurator(Consumer<Scene> initialSceneCallback) {
+        Router.initialSceneCallback = initialSceneCallback;
     }
 
     public static void addScene(String sceneName, String resourceName) {
@@ -52,18 +52,24 @@ public class Router {
                 initialScene.setRoot(root);
             }
 
-            if (route.stageOptions != null) {
-                stage.setWidth(route.stageOptions.getWidth());
-                stage.setHeight(route.stageOptions.getHeight());
-                stage.setMaximized(route.stageOptions.isMaximized());
-            } else {
-                stage.setWidth(defaultStageOptions.getWidth());
-                stage.setHeight(defaultStageOptions.getHeight());
-                stage.setMaximized(defaultStageOptions.isMaximized());
-            }
+            configureStage(route.stageOptions);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void configureStage(StageOptions stageOptions) {
+        if (stageOptions == null) {
+            stage.setWidth(defaultStageOptions.getWidth());
+            stage.setHeight(defaultStageOptions.getHeight());
+            stage.setMaximized(defaultStageOptions.isMaximized());
+
+            return;
+        }
+
+        stage.setWidth(stageOptions.getWidth());
+        stage.setHeight(stageOptions.getHeight());
+        stage.setMaximized(stageOptions.isMaximized());
     }
 
     private static Parent loadScene(String resourceName) throws IOException {
