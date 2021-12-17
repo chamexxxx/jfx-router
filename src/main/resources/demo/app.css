@@ -1,0 +1,12 @@
+.label {
+    -fx-font-size: 15;
+}
+
+.text-field, .button {
+    -fx-max-width: 300;
+    -fx-padding: 7;
+}
+
+.button {
+    -fx-cursor: hand;
+}
